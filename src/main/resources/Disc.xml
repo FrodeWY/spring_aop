@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="discAop2" class="com.test.test5.DiscAop2"></bean>
+    <bean id="blankDisc2" class="com.test.test5.BlankDisc2"></bean>
+    <import resource="Audience.xml"/>
+    <aop:aspectj-autoproxy/>
+    <aop:config>
+        <aop:aspect ref="discAop2">
+            <!--args()里的参数必须与countTranks方法的一致,xml中用and代替&& or代替|| not 代替！-->
+            <aop:pointcut id="point2" expression="execution(* com.test.test5.Disc2.play(int ,String)) and args(trank,s1)"/>
+            <aop:before method="countTranks" pointcut-ref="point2"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

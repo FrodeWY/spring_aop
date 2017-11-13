@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <aop:aspectj-autoproxy/>
+    <aop:config>
+        <!--放在 <aop:config>中，可以被所有 <aop:config>中的aspect使用，放在<aop:aspect>中可以被当前aspect使用-->
+        <aop:pointcut id="poin1" expression="execution(* com.test.test1.Performance.perform(..))"></aop:pointcut>
+        <aop:aspect ref="audience">
+            <aop:before pointcut-ref="poin1" method="silenceCellPhones"></aop:before>
+            <aop:before method="takeSeats" pointcut="execution(* com.test.test1.Performance.perform(..))"/>
+            <aop:after-returning method="applause" pointcut-ref="poin1"/>
+            <aop:after-throwing method="demandRefund" pointcut-ref="poin1"/>
+            <!--<aop:declare-parents types-matching="com.test.test1.Performance+" implement-interface="com.test.test4.Encoreable" default-impl="com.test.test4.DefaultEncoreable"/>-->
+           <!--或者使用delegate-ref属性引用一个bean作为引入的委托，和default-impl的区别在于他本身是个Spring bean，可以被注入，通知，或使用其他Spring配置-->
+            <aop:declare-parents types-matching="com.test.test1.Performance+" implement-interface="com.test.test4.Encoreable" delegate-ref="defaultEncoreable"/>
+        </aop:aspect>
+        <aop:aspect ref="audience">
+            <aop:around method="around" pointcut="execution(* com.test.test5.Person.say(..))"></aop:around>
+        </aop:aspect>
+    </aop:config>
+    <bean id="audience" class="com.test.test5.Audience"></bean>
+
+    <bean id="defaultEncoreable" class="com.test.test4.DefaultEncoreable"/>
+</beans>

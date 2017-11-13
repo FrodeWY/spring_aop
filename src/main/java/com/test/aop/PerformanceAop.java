@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
  * Created by K on 2017/11/12.
  */
 @Aspect
-@Component
+//@Component
 public class PerformanceAop {
     /*匹配 com.test.test1.Performance.perform()方法并且是sub包下的
     * execution(* com.test.test1.Performance.perform(..))，execution()匹配是连接点的执行方法，无论是哪个包只要实现了Performance接口，*(匹配任意返回值),com.test.test1.Performance方法所属的类，perform()方法，(..)无论入参是什么

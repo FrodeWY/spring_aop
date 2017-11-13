@@ -2,6 +2,7 @@ package com.test.controller;
 
 import com.test.test1.AroundPerformance;
 import com.test.test1.Performance;
+import com.test.test4.Encoreable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
